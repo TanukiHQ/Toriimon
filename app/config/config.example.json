@@ -1,0 +1,12 @@
+{
+    "app": {
+        "name": "TanukiHQ Toriimon"
+    },
+    "webserver": {
+        "webAddress": "localhost:5000",
+        "port": 5000
+    },
+    "toriimon": {
+        "secretKey": "testKey"
+    }
+}
