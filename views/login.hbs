@@ -1,0 +1,18 @@
+<section class="section">
+    <div class="container">
+        <h1 class="title">Login</h1>
+        <form method="POST">
+            <div class="field">
+                <input class="input" name="email" required placeholder="Email">
+            </div>
+            <div class="field">
+                <input class="input" name="password" type="password" required placeholder="Password">
+            </div>
+            <input name="_csrf" value="{{csrfToken}}">
+            <hr>
+            <button class="button" type="submit">Proceed</button>
+        </form>
+        <br>
+        <a href="/register">Register instead</a>
+    </div>
+</section>

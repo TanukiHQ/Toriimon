@@ -26,7 +26,18 @@ const getAccountByEmail = async (email) => {
     return user
 }
 
+const getAccountByID = async (uid) => {
+    const user = await User.findOne({
+        where: {
+            id: uid,
+        },
+        raw: true,
+    })
+    return user
+}
+
 module.exports = {
     isExist,
     getAccountByEmail,
+    getAccountByID,
 }

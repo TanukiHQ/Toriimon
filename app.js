@@ -1,5 +1,5 @@
 // Load environment
-const config = require('./app/config/config')
+const config = require('./app/config/config.json')
 
 // Express
 const express = require('express')
@@ -9,7 +9,7 @@ app.use('/third_party', express.static('third_party'))
 
 // cookieParser: Secret key for signing
 const cookieParser = require('cookie-parser')
-app.use(cookieParser(config.app.secretKey))
+app.use(cookieParser(config.toriimon.secretKey))
 
 // BodyParser
 app.use(express.urlencoded({ extended: true }))

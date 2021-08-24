@@ -1,9 +1,13 @@
 const { Model } = require('sequelize')
 module.exports = (sequelize, DataTypes) => {
-    class Token extends Model {}
+    class Limits extends Model {}
 
-    Token.init(
+    Limits.init(
         {
+            type: {
+                allowNull: false,
+                type: DataTypes.STRING,
+            },
             from_date: {
                 allowNull: false,
                 type: DataTypes.DATE,
@@ -16,10 +20,10 @@ module.exports = (sequelize, DataTypes) => {
 
         {
             sequelize,
-            tableName: 'Token',
-            modelName: 'Token',
+            tableName: 'Limits',
+            modelName: 'Limits',
         },
     )
 
-    return Token
+    return Limits
 }

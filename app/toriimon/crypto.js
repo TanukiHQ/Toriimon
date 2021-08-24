@@ -1,6 +1,7 @@
 // UUID & Hashing
 const uuid = require('uuid')
 const sha512 = require('hash-anything').sha512
+const saltRounds = 12
 
 // Random String generator
 const randPass = require('secure-random-password')
@@ -27,6 +28,6 @@ const hashString = (str) => {
 }
 
 module.exports = {
-    randomString: random,
+    randomToken: random,
     hashString,
 }

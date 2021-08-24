@@ -7,6 +7,25 @@
         "port": 5000
     },
     "toriimon": {
-        "secretKey": "testKey"
+        "secretKey": "testKey",
+        "mailer": {
+            "host": "smtp.sendgrid.net",
+            "port": 587,
+            "auth": {
+                "user": "apikey",
+                "pass": "Enter your apikey here"
+            },
+            "customisation": {
+                "confirmation": {
+                    "subject": "Confirm your email address - Tourisit"
+                },
+                "resetPassword": {
+                    "subject": "Password reset - Tourisit"
+                },
+                "unknownLogin": {
+                    "subject": "New login detected - Tourisit"
+                }
+            }
+        }
     }
 }

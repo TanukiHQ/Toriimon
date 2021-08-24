@@ -78,12 +78,17 @@ module.exports = (sequelize, DataTypes) => {
             foreignKey: 'uid',
         })
 
-        User.hasMany(models.Session, {
+        User.hasMany(models.Limits, {
             onDelete: 'cascade',
             foreignKey: 'uid',
         })
 
         User.hasMany(models.Token, {
+            onDelete: 'cascade',
+            foreignKey: 'uid',
+        })
+
+        User.hasMany(models.Log, {
             onDelete: 'cascade',
             foreignKey: 'uid',
         })
