@@ -8,7 +8,7 @@
             <div class="field">
                 <input class="input" name="password" type="password" required placeholder="Password">
             </div>
-            <input name="_csrf" value="{{csrfToken}}">
+            <input name="_csrf" type="hidden" value="{{csrfToken}}">
             <hr>
             <button class="button" type="submit">Proceed</button>
         </form>
