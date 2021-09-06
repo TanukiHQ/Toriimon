@@ -37,6 +37,10 @@ app.engine('hbs', exphbs({
     helpers: require('./app/helpers/handlebars'),
 }))
 
+// Toriimon Middleware
+const { injectCurrentUser } = require('./app/toriimon_express/middleware')
+app.use(injectCurrentUser)
+
 // Routes
 require('./app/routes/routes')(app)
 
