@@ -21,6 +21,11 @@ module.exports = (sequelize, DataTypes) => {
                 allowNull: false,
                 type: DataTypes.STRING,
             },
+            invoker: {
+                allowNull: false,
+                type: DataTypes.STRING,
+                defaultValue: uuid.NIL,
+            },
         },
 
         {
