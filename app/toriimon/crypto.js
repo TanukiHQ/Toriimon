@@ -1,10 +1,14 @@
 // UUID & Hashing
 const uuid = require('uuid')
 const sha512 = require('hash-anything').sha512
+const bcrypt = require('bcrypt')
 const saltRounds = 12
 
 // Random String generator
 const randPass = require('secure-random-password')
+
+// Config
+const config = require('../config/config.json')
 
 const random = () => {
     // Generate and return random sha512 string

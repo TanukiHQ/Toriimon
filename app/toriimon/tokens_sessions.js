@@ -23,6 +23,36 @@ const addSession = (uid) => {
     return newSessionID
 }
 
+const destroySession = (sid) => {
+    return Session.destroy({
+        where: {
+            sid: sid,
+        },
+    })
+}
+
+const getUIDBySessionID = async (sid) => {
+    const session = await Session.findOne({
+        where: {
+            sid: sid,
+        },
+    })
+
+    if (!session) {
+        return null
+    }
+
+    return session.uid
+}
+
+const destroyAllSessions = (uid) => {
+    return Session.destroy({
+        where: {
+            uid: uid,
+        },
+    })
+}
+
 const addToken = (uid, tokenType) => {
     const newToken = randomToken()
 
@@ -37,5 +67,8 @@ const addToken = (uid, tokenType) => {
 
 module.exports = {
     addSession,
+    destroySession,
+    destroyAllSessions,
+    getUIDBySessionID,
     addToken,
 }

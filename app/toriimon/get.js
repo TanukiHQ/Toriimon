@@ -1,21 +1,23 @@
 // Database Imports
 const { User } = require('../models')
 
-const isExist = async (email) => {
-    const count = await User.count({
-        where: {
-            email: email,
-        },
-    })
+// const accountIsExist = async (email) => {
+//     const count = await User.count({
+//         where: {
+//             email: email,
+//         },
+//     })
 
-    if (count > 1) {
-        return true
-    }
+//     console.table([count])
 
-    return false
-}
+//     if (count !== 0) {
+//         return true
+//     }
 
-const getAccountByEmail = async (email) => {
+//     return false
+// }
+
+const getUserByEmail = async (email) => {
     const user = await User.findOne({
         where: {
             email: email,
@@ -26,7 +28,7 @@ const getAccountByEmail = async (email) => {
     return user
 }
 
-const getAccountByID = async (uid) => {
+const getUserByID = async (uid) => {
     const user = await User.findOne({
         where: {
             id: uid,
@@ -36,8 +38,20 @@ const getAccountByID = async (uid) => {
     return user
 }
 
+const getAttribute = (uid, attribute) => {
+    return new Promise((resolve, reject) => {
+        User.findOne({ where: { id: uid } }).then((user) => {
+            if (!user) {
+                return reject(ToriimonError(['AccountMissing', 'Requested account does not exist.']))
+            }
+
+            return resolve(user[attribute])
+        })
+    })
+}
+
 module.exports = {
-    isExist,
-    getAccountByEmail,
-    getAccountByID,
+    getUserByEmail,
+    getUserByID,
+    getAttribute,
 }

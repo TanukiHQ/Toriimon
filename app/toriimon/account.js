@@ -1,4 +1,5 @@
 // Hashing
+const uuid = require('uuid')
 const sha512 = require('hash-anything').sha512
 const bcrypt = require('bcrypt')
 
@@ -6,7 +7,7 @@ const bcrypt = require('bcrypt')
 const { User } = require('../models')
 
 // Toriimon Imports
-const { isExist } = require('./get')
+const { getUserByEmail } = require('./get')
 const { randomToken, hashString } = require('./crypto')
 const { addToken, addSession } = require('./tokens_sessions')
 const { sendMail } = require('./mailer')
@@ -14,11 +15,14 @@ const { sendMail } = require('./mailer')
 // Config
 const config = require('../config/config.json')
 
+// Error
+const ToriimonError = require('./toriimon_error')
+
 const newAccount = (name, email, password, ip) => {
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
         // Reject if an account already exists
-        if (isExist(email) === true) {
-            return reject((new Error({ name: 'AccountAlreadyExist', message: 'Account already exists in the database' })))
+        if (await getUserByEmail(email)) {
+            return reject(new ToriimonError(['DuplicateAccountError', 'Account already exists in the database']))
         }
 
         // Hash password
@@ -45,7 +49,7 @@ const newAccount = (name, email, password, ip) => {
 }
 
 const loginAccount = (email, password, ip) => {
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
         // Hash password SHA512
         const incomingHashedPasswordSHA512 = sha512({
             a: password,
@@ -53,15 +57,15 @@ const loginAccount = (email, password, ip) => {
         })
 
         // Retrieve account object from database
-        const RequestedUserAccount = User.findOne({ where: { email: email }, raw: true })
+        const RequestedUserAccount = await User.findOne({ where: { email: email }, raw: true })
 
         if (RequestedUserAccount === null) {
-            return reject((new Error({ name: 'AccountNotFound', message: 'Account does not exist.' })))
+            return reject(new ToriimonError(['AccountNotExistError', 'Account does not exist']))
         }
 
         // Compare bcrypt hashes
         // If RequestedUserAccount.password is undefined, process the comparison as is with undefined as a string.
-        if (bcrypt.compareSync(incomingHashedPasswordSHA512, RequestedUserAccount.password || randomToken()) === true) {
+        if ((await bcrypt.compare(incomingHashedPasswordSHA512, RequestedUserAccount.password)) === true) {
             // Update last seen time
             User.update({ lastseen_time: new Date(), ip_address: ip }, { where: { email: email } })
 
@@ -71,7 +75,7 @@ const loginAccount = (email, password, ip) => {
             return resolve(sid)
         }
 
-        return reject(new Error({ name: 'AccountPasswordMismatch', message: 'Incoming password does not match the one stored in the database.' }))
+        return reject(new ToriimonError(['PasswordMismatchError', 'Incoming password does not match with stored.']))
     })
 }
 
