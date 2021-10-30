@@ -4,9 +4,12 @@
 const { requireAuthorisation, requireIsAdmin, forwardIfLoggedIn } = require('../toriimon_express/middleware')
 
 module.exports = (app) => {
-    app.use('/', forwardIfLoggedIn, require('./auth'))
+    app.use('/', require('./auth'))
     app.use('/api', require('./api'))
     app.use('/admin', requireAuthorisation, require('./admin'))
+    app.get('/afterlogin', requireAuthorisation, (res, req) => {
+        return res.send('You are logged in!')
+    })
 
     // 404 Page
     app.get('*', (req, res) => {

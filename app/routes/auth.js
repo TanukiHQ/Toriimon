@@ -3,12 +3,13 @@ const { loginAccount, newAccount } = require('../toriimon/account')
 const router = express.Router()
 
 const { ToriimonCookie } = require('../helpers/cookie_options')
+const { forwardIfLoggedIn } = require('../toriimon_express/middleware')
 
 router.get('/', (req, res) => {
     return res.redirect(302, '/login')
 })
 
-router.get('/login', (req, res) => {
+router.get('/login', forwardIfLoggedIn, (req, res) => {
     const metadata = {
         meta: {
             title: 'Login',
@@ -18,7 +19,7 @@ router.get('/login', (req, res) => {
     return res.render('auth/login', metadata)
 })
 
-router.post('/login', async (req, res) => {
+router.post('/login', forwardIfLoggedIn, async (req, res) => {
     const { email, password } = req.body
 
     // Get client IP address
@@ -46,7 +47,7 @@ router.post('/login', async (req, res) => {
     })
 })
 
-router.get('/register', (req, res) => {
+router.get('/register', forwardIfLoggedIn, (req, res) => {
     const metadata = {
         meta: {
             title: 'Register',
@@ -56,7 +57,7 @@ router.get('/register', (req, res) => {
     return res.render('auth/register', metadata)
 })
 
-router.post('/register', (req, res) => {
+router.post('/register', forwardIfLoggedIn, (req, res) => {
     const { name, email, password } = req.body
 
     // Get client IP address

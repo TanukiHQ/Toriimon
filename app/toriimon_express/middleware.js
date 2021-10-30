@@ -27,8 +27,8 @@ const forwardIfLoggedIn = async (req, res, next) => {
 
     // Redirect to authorised pages if the user is logged in.
     // TODO: Set redirect address to one in config
-    if ((await getUIDBySessionID(sid)) !== null) {
-        return res.redirect('/AFTERLOGIN')
+    if ((await getUIDBySessionID(sid))) {
+        return res.redirect('/LOGINOK')
     }
 
     // If not loggedin, proceed.
