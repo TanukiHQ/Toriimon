@@ -19,6 +19,16 @@ const injectCurrentUser = async (req, res, next) => {
 
     // If all is well, req.user is set to the user object.
     req.user = await getUserByID(uid)
+
+    // Update current session
+    Session.update({
+        last_used: new Date(),
+    }, {
+        where: {
+            sid: sid,
+        },
+    })
+
     // Update last seen
     User.update({
         last_seen: new Date(),

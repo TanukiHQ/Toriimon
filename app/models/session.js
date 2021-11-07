@@ -12,8 +12,13 @@ module.exports = (sequelize, DataTypes) => {
             },
 
             device_info: {
-                allowNull: true,
-                type: DataTypes.STRING,
+                allowNull: false,
+                type: DataTypes.STRING(2000),
+            },
+
+            last_used: {
+                allowNull: false,
+                type: DataTypes.DATE,
             },
         },
 
