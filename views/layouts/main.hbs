@@ -17,7 +17,7 @@
     <script src="/third_party/jquery/jquery.min.js"></script>
     <link href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" rel="stylesheet">
 
-    <script src="/third_party/turbolinks/turbolinks.js"></script>
+    {{!-- <script src="/third_party/turbolinks/turbolinks.js"></script>
     <script>
         Turbolinks.start()
 
@@ -27,13 +27,13 @@
         $(document).on('turbolinks:load', function () {
             return $('main').fadeIn('fast');
         });
-    </script>
+    </script> --}}
 </head>
 
 <body>
     {{>navbar}}
 
-    <main style="display: none;">
+    <main>
         {{{body}}}
     </main>
 
