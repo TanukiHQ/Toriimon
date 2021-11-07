@@ -9,7 +9,7 @@ const { User } = require('../models')
 // Toriimon Imports
 const { getUserByEmail } = require('./get')
 const { randomToken, hashString } = require('./crypto')
-const { addToken, addSession } = require('./tokens_sessions')
+const { addToken, addSession, destroySession } = require('./tokens_sessions')
 const { sendMail } = require('./mailer')
 
 // Config
