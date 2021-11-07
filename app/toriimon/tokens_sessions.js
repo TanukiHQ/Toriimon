@@ -4,10 +4,14 @@ const bcrypt = require('bcrypt')
 
 // Database Imports
 const { Token, Session } = require('../models')
+const { Op } = require('sequelize')
 
 // Toriimon Imports
 const { isExist } = require('./get')
 const { randomToken, hashString } = require('./crypto')
+
+// Cron job
+const cron = require('node-cron')
 
 // Config
 const config = require('../config/config.json')
@@ -66,6 +70,19 @@ const addToken = (uid, tokenType) => {
 
     return newToken
 }
+
+// Delete all expired session tokens (older than 30 days)
+cron.schedule('0 0 * * *', () => {
+    Session.destroy({
+        where: {
+            updatedAt: {
+                [Op.lt]: new Date(Date.now() - (1000 * 60 * 60 * 24 * 30)), // 30 days
+            },
+        },
+    })
+
+    console.log('Midnight has passed. All sessions older than 30 days old have been flushed.')
+})
 
 module.exports = {
     addSession,
