@@ -79,6 +79,15 @@ const loginAccount = (email, password, ip) => {
     })
 }
 
+const logoutAccount = (sid) => {
+    return new Promise(async (resolve, reject) => {
+        // Delete session token
+        destroySession(sid)
+
+        return resolve(true)
+    })
+}
+
 const destroyAccount = (uid) => {
     return new Promise((resolve, reject) => {
         User.destroy({ where: { id: uid } })
@@ -98,6 +107,7 @@ const setAttribute = (uid, attribute, value) => {
 module.exports = {
     newAccount,
     loginAccount,
+    logoutAccount,
     destroyAccount,
     setAttribute,
 }

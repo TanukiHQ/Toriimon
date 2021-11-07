@@ -82,4 +82,11 @@ router.post('/register', forwardIfLoggedIn, (req, res) => {
     })
 })
 
+router.get('/logout', (req, res) => {
+    logoutAccount(req.signedCookies.auth_token)
+
+    res.clearCookie('auth_token')
+    return res.redirect('/')
+})
+
 module.exports = router
