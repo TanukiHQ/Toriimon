@@ -2,6 +2,9 @@ const { getAttribute } = require('../toriimon/account')
 const { getUserByID } = require('../toriimon/get')
 const { getUIDBySessionID } = require('../toriimon/tokens_sessions')
 
+const { Session, User } = require('../models')
+const { ToriimonCookie } = require('../helpers/cookie_options')
+
 const injectCurrentUser = async (req, res, next) => {
     // Check whether SID is present
     const sid = req.signedCookies.auth_token
@@ -14,6 +17,10 @@ const injectCurrentUser = async (req, res, next) => {
     const uid = await getUIDBySessionID(sid)
     if (uid === null) {
         res.user = null
+
+        // Flush cookie
+        res.clearCookie('auth_token')
+
         return next()
     }
 
