@@ -48,7 +48,7 @@ const newAccount = (name, email, password, ip) => {
     })
 }
 
-const loginAccount = (email, password, ip) => {
+const loginAccount = (email, password, ip, userAgent) => {
     return new Promise(async (resolve, reject) => {
         // Hash password SHA512
         const incomingHashedPasswordSHA512 = sha512({
@@ -70,7 +70,7 @@ const loginAccount = (email, password, ip) => {
             User.update({ lastseen_time: new Date(), ip_address: ip }, { where: { email: email } })
 
             // Create new session token
-            const sid = addSession(RequestedUserAccount.id)
+            const sid = addSession(RequestedUserAccount.id, userAgent)
 
             return resolve(sid)
         }

@@ -12,12 +12,14 @@ const { randomToken, hashString } = require('./crypto')
 // Config
 const config = require('../config/config.json')
 
-const addSession = (uid) => {
+const addSession = (uid, userAgent) => {
     const newSessionID = randomToken()
 
     Session.create({
         sid: newSessionID,
         uid: uid,
+        device_info: JSON.stringify(userAgent),
+        last_used: new Date(),
     })
 
     return newSessionID

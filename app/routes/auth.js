@@ -25,10 +25,13 @@ router.post('/login', forwardIfLoggedIn, async (req, res) => {
     // Get client IP address
     const ip = (req.headers['x-forwarded-for'] || req.socket.remoteAddress || '').split(',')[0].trim()
 
+    // Get client user agent
+    const userAgent = req.useragent
+
     // Ignore post if email or password is missing
     if (email === '' || password === '') return
 
-    loginAccount(email, password, ip).then((sid) => {
+    loginAccount(email, password, ip, userAgent).then((sid) => {
         if (sid === null) {
             return res.redirect('/LOGINFAILED')
         }

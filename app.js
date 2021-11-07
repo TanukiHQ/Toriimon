@@ -14,6 +14,10 @@ app.use(cookieParser(config.toriimon.secretKey))
 // BodyParser
 app.use(express.urlencoded({ extended: true }))
 
+// Useragent
+const useragent = require('express-useragent')
+app.use(useragent.express())
+
 // Csurf: CSRF protection
 const csrf = require('csurf')
 app.use(csrf({ cookie: true }))
